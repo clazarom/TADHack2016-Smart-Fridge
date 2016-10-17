@@ -41,4 +41,6 @@ The Raspbery Pi is the house fridge interface. We implemented a JS Node to work 
   We started at one of the links provided during the Hackathon, and based this part of the hack in their Restcomm JavaScript  WebRTC
   http://documentation.telestax.com/connect/sdks/restcomm-client-web-sdk-quick-start.html#web-sdk-guide
   
+  ***NOTE: /scripts/WebRTComm.js our browser was not extremely happy with the WebRTCComm.js file we got in the web-sdk, so we downloaded the latest version and substitude it.
+  
 
