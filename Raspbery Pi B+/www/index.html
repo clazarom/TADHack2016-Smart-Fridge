@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title> Little Endian's Kitchen</title>
+
+<!-- Google fonts -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+<!-- font awesome -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- bootstrap -->
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+<!-- animate.css -->
+<link rel="stylesheet" href="assets/animate/animate.css" />
+<link rel="stylesheet" href="assets/animate/set.css" />
+<!-- gallery -->
+<link rel="stylesheet" href="assets/gallery/blueimp-gallery.min.css">
+<!-- favicon -->
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+
+<link rel="stylesheet" href="assets/style.css">
+
+<!-- Include adapter.js to handle WebRTC differences between browsers -->
+<script type="text/javascript" src='scripts/adapter.js'></script>
+<!-- Include the JAIN SIP lib -->
+<script type="text/javascript" src='scripts/jain-sip.js'></script>
+<!-- Include the low level WebRTComm lib that sits on top of JAIN SIP and provides WebRTC media and SIP signaling facilities  -->
+<script type="text/javascript" src='scripts/WebRTComm.js'></script>
+<!-- Include the high level Restcomm Web library that sits on top of WebRTComm.js and provides an easy to use, a Twilio compatible API -->
+<script type="text/javascript" src='scripts/RestCommWebClient.js'></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+<div class="topbar animated fadeInLeftBig"></div>
+
+<!-- html elements for local and remote media (audio and video if applicable -->
+	<video id="localMedia" autoplay muted style="display: none;"></video>
+	<video id="remoteMedia" autoplay style="display: none;"></video>
+
+<!-- Header Starts -->
+<div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation" id="top-nav">
+          <div class="container">
+            <div class="navbar-header">
+              <!-- Logo Starts -->
+              <a class="navbar-brand" href="#home"><h2>Little Endian's Kitchen</h2></a>
+              <!-- #Logo Ends -->
+
+
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-Little Endian's Kitchenbar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+            </div>
+
+              <!-- Nav Starts -->
+            <div class="navbar-collapse  collapse">
+              <ul class="nav navbar-nav navbar-right scroll">
+                 <li class="active"><a href="index.html">Home</a></li>
+              </ul>
+            </div>
+            <!-- #Nav Ends -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+<!-- #Header Starts -->
+
+
+
+<!-- works -->
+<div id="works"  class=" clearfix grid"> 
+    <figure class="effect-oscar  wowload fadeIn">
+        <img src="images/portfolio/1.jpg" alt="img01"/>
+        <figcaption>
+            <h2>Fridge</h2>
+            <p> Are we hungry yet?<br>
+            <a href="#fridge" title="1" >View more</a></p>            
+        </figcaption>
+    </figure>
+     <figure class="effect-oscar  wowload fadeInUp">
+        <img src="images/portfolio/2.jpg" alt="img01"/>
+        <figcaption>
+            <h2>Chores</h2>
+            <p> Who is in charge of what this time?<br>
+            <a href="#about" title="1" >View more</a></p>            
+        </figcaption>
+    </figure>
+     <figure class="effect-oscar  wowload fadeInUp">
+        <img src="images/portfolio/3.jpg" alt="img01"/>
+        <figcaption>
+            <h2>Send text</h2>
+            <p> Get them instantly<br>
+            <a href="#contact" title="1" >View more</a></p>            
+        </figcaption>
+    </figure>
+    </figure>
+     
+</div>
+<!-- works -->
+
+<!-- Fridge list section -->
+	<div id="fridge"  class="container spacer about">
+			<h2 class="text-center wowload fadeInUp">What is missing in the Fridge?</h2>  
+			<div class ="row">
+				<ul id="missing">
+					<li>Milk</li>
+					<li>Eggs</li>
+					<li>Beers</li>
+				</ul>
+			</div>
+			<div class="text-center">
+						<button id="update_fridge" class="btn btn-primary"><i class="fa fa-refresh"></i> Update Fridge</button>
+						<button id="vr" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Check</button>
+
+
+			</div>
+
+	</div>
+
+<!-- -->
+
+
+<!-- Cirlce Starts -->
+	<div id="about"  class="container spacer about">
+		<h2 class="text-center wowload fadeInUp">Weekly Duties</h2>  
+		  <div class="row">
+			<div class="col-sm-6 wowload fadeInLeft">
+				<h4><i class="fa fa-paint-brush"></i> TODO</h4>
+			</div>
+			<div class="col-sm-6 wowload fadeInRight">
+				<h4><i class="fa fa-user"></i> IN CHARGE</h4>
+			</div>
+		  </div>
+		 <div class="row">
+			  <div class="col-sm-6 wowload fadeInLeft">
+				<p> Kitchen </p>
+			  </div>
+			  <div class="col-sm-6 wowload fadeInRight">
+				<p id="kitchen"> Adnan</p>
+			  </div>
+		</div>
+
+		<div class="row">
+		    <div class="col-sm-6 wowload fadeInLeft">
+			<p> Living Room </p>
+		  </div>
+		  <div class="col-sm-6 wowload fadeInRight">
+			<p id="living-room"> Cat</p>
+		  </div>
+		  </div>
+		  
+		<div class="row">
+		      <div class="col-sm-6 wowload fadeInLeft">
+			<p> Top Bathroom</p>
+		  </div>
+		  <div class="col-sm-6 wowload fadeInRight">
+			<p id="top-bathroom"> Sergio</p>
+		  </div>
+		  </div>
+		  
+		<div class="row">
+		      <div class="col-sm-6 wowload fadeInLeft">
+				<p> Bottom Bathroom</p>
+		      </div>
+		      <div class="col-sm-6 wowload fadeInRight">
+			    <p id="bottom-bathroom"> Chris</p>
+			</div>
+		</div>
+		  <div class="text-center">
+			<button id="reminder" class="btn btn-primary"><i class="fa fa-exclamation-circle"></i> It's Monday!!</button>
+
+		  </div>
+		  
+	</div>
+<!-- Chores end -->
+
+<!-- Send message -->
+	<!--Contact Starts-->
+	<div id="contact" class="spacer">
+		<div class="container contactform center">
+			<h2 class="text-center  wowload fadeInUp">Get a taste of <strong>telestax</strong></h2>
+			<div class="row wowload fadeInLeftBig">      
+			      <div class="col-sm-6 col-sm-offset-3 col-xs-12">      
+					<textarea rows="5" placeholder="Message"></textarea>
+					<button class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--Contact Ends-->
+
+	<!-- Send message -->
+	<div class=" text-center ">
+		<img id="callButton" src="images/call-button.png"></img>
+		<img id="hangupButton" src="images/hangup-button.png"></img>
+		<div class="logContainer">
+			<!--
+			<img class="consoleImage" src="../img/console.png"/>
+			-->
+			<div id="consoleHeader">console></div>
+			<div id="log">Loading RestComm client...</div>
+		</div>
+		<img id="logoImage" src="../images/telestax.png"></img>
+	</div>
+
+<!-- End send message -->
+
+
+<!-- Footer Starts -->
+<div class="footer text-center spacer">
+</div>
+<!-- # Footer Ends -->
+<a href="#works" class="gototop "><i class="fa fa-angle-up  fa-3x"></i></a>
+
+
+
+
+<!-- Telestax -->
+<script>
+		var localMedia = document.getElementById("localMedia");
+		var remoteMedia = document.getElementById("remoteMedia");
+		var callButton = document.getElementById("callButton");
+		var hangupButton = document.getElementById("hangupButton");
+		var updateFridgeButton = document.getElementById("update_fridge");
+		var vrButton = document.getElementById("vr");
+		var sendReminderButton=  document.getElementById("reminder");
+		var currentConnection;
+
+		callButton.onclick = call;
+		hangupButton.onclick = hangup;
+		updateFridgeButton.onclick = update;
+		vrButton.onclick=  goVR;
+		sendReminderButton.onclick=  sendReminder;
+
+		var parameters = {
+			'debug': true,
+			'username': 'user',
+			'password': 'user_password',
+			'registrar': 'wss://tadhack.restcomm.com:5063',
+			'domain': 'tadhack.restcomm.com'
+		};
+
+		// In order to use RestCommWebClient you first to setup the Device with parameters set above
+		RestCommClient.Device.setup(parameters);
+
+		// Pass a callback to get notified when RestCommWebClient is ready
+		RestCommClient.Device.ready(function(device) {
+			$("#log").text("Ready");
+		});
+
+		// Pass a callback to get notified if a Device error occurs
+		RestCommClient.Device.error(function(error) {
+			$("#log").text("Error: " + error.message);
+		});
+
+		// Pass a callback to get notified when a connection is established successfuly
+		RestCommClient.Device.connect(function(connection) {
+			$("#log").text("Successfully established call");
+		});
+		
+
+
+		// When user presses Dial, this function is called that makes the actuall call
+		function call() {
+			var parameters = {
+				'username': 'client@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
+				'video-enabled': false,  // should we use WebRTC video or WebRTC audio only?
+				'local-media': localMedia,
+				'remote-media': remoteMedia,
+			};
+
+			// Make the actual call, using the parameters above
+			currentConnection = RestCommClient.Device.connect(parameters);
+
+			// Pass a callback to get notified when the connection is disconnected
+			currentConnection.disconnect(function(connection) {
+				$("#log").text("Connection ended");
+			});
+
+			// Pass a callback to get notified if a Connetion error occurs
+			currentConnection.error(function(error) {
+				$("#log").text("Connection error: " + error);
+			});
+		}
+
+		// When user presses Hangup, this function is called that makes the actuall call
+		function hangup() {
+			RestCommClient.Device.disconnectAll();
+		}
+		
+		//When user presses the Monday button:
+		// Change who is responsible for the week
+		// Send an email to all members using Telestax
+		function sendReminder(){
+			var kit = document.getElementById("kitchen");
+			var kit_content = kit.innerHTML;
+			var lr = document.getElementById("living-room");
+			var lr_content = lr.innerHTML;
+			var tb = document.getElementById("top-bathroom");
+			var tb_content = tb.innerHTML;
+			var bb = document.getElementById("bottom-bathroom");
+			var bb_content = bb.innerHTML;
+			
+			//Update the list
+			kit.innerHTML=(""+lr_content);
+			lr.innerHTML=(""+tb_content);
+			tb.innerHTML=(""+bb_content);
+			bb.innerHTML=(""+kit_content);
+
+
+
+			var message ="For this week's assignment: \n\n kitchen -- "+ kit_content +" \n  living-room -- " +lr_content+ "\n top bathroom -- "+tb_content+"\n bottom bathroom --" +bb_content;
+
+			$("#log").text("Send message: " + message);
+
+			var parameters = {
+				'username': 'client@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
+				'message': messsage,
+			};
+			RestCommClient.Device.sendMessage(parameters);
+
+		}
+		
+		//When user presses Update Fridge, the list is updated
+		// TODO add matrix integration and user interaction with the list
+		function update(){
+			var list = document.getElementById("missing").getElementsByTagName("li");
+			var JSON_mes = "[";
+			for (i = 0; i < list.length; i++){
+				JSON_mes += list[i].innerHTML+",";
+				list[i];
+			}
+			JSON_mes = JSON_mes.substring(0, JSON_mes.length-1);
+			JSON_mes += "]";
+
+			$("#log").text("Fridge content: " + JSON_mes);
+
+
+		}
+		//When user presses virtual reality, we open the server link and pass the list parameters in 
+		//the POST as a JSON object
+		function goVR(){
+			var list = document.getElementById("missing").getElementsByTagName("li");
+			var JSON_mes = "[\"";
+			for (i = 0; i < list.length; i++){
+				JSON_mes += list[i].innerHTML+"\",\"";
+				list[i];
+			}
+			JSON_mes = JSON_mes.substring(0, JSON_mes.length-1);
+			JSON_mes += "]";
+			
+			//alert(list);
+			var jlist = [];
+                        $(list).each(function(val){
+			  jlist.push(list[val].innerHTML);
+			});                        
+			var jsonlist = {};
+			jsonlist["list"] = jlist;
+			$("#log").text("Fridge VR: " + JSON_mes);
+			console.log(list);
+			//Go to the VR server
+			
+			//window.location.href  = ""
+			 $.ajax({
+			     url : "http://10.0.1.185:3000/",
+			     type: "POST",
+			     contentType: "application/json; charset=utf-8",
+			     crossDomain: true,
+			     data : JSON.stringify(jsonlist),
+			     success: function(data)
+			     {
+				 console.log("done");
+				 //local IP address to the VR server
+				 location.href = "http://10.0.1.185:3000/cardboard";
+			    },
+			    error:function(data){alert ('connection error');},
+			  });
+		}
+
+		</script>
+<!-- TELETEX -->
+<!-- En telestax -->
+<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+    <h3 class="title">Title</h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->    
+</div>
+
+
+
+<!-- jquery -->
+<script src="assets/jquery.js"></script>
+
+<!-- wow script -->
+<script src="assets/wow/wow.min.js"></script>
+
+
+<!-- boostrap -->
+<script src="assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
+
+<!-- jquery mobile -->
+<script src="assets/mobile/touchSwipe.min.js"></script>
+<script src="assets/respond/respond.js"></script>
+
+<!-- gallery -->
+<script src="assets/gallery/jquery.blueimp-gallery.min.js"></script>
+
+<!-- custom script -->
+<script src="assets/script.js"></script>
+
+</body>
+</html>
