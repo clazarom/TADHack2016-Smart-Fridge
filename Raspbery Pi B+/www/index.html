@@ -196,8 +196,8 @@
 			<h2 class="text-center  wowload fadeInUp">Get a taste of <strong>telestax</strong></h2>
 			<div class="row wowload fadeInLeftBig">      
 			      <div class="col-sm-6 col-sm-offset-3 col-xs-12">      
-					<textarea rows="5" placeholder="Message"></textarea>
-					<button class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send</button>
+					<textarea id ="message_content" rows="5" placeholder="Message"></textarea>
+					<button id="message" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send</button>
 				</div>
 			</div>
 		</div>
@@ -239,6 +239,8 @@
 		var updateFridgeButton = document.getElementById("update_fridge");
 		var vrButton = document.getElementById("vr");
 		var sendReminderButton=  document.getElementById("reminder");
+		var sendMessageButton=  document.getElementById("message");
+
 		var currentConnection;
 
 		callButton.onclick = call;
@@ -246,6 +248,7 @@
 		updateFridgeButton.onclick = update;
 		vrButton.onclick=  goVR;
 		sendReminderButton.onclick=  sendReminder;
+		sendMessageButton.onclick = sendMessage;
 
 		var parameters = {
 			'debug': true,
@@ -390,6 +393,26 @@
 			    },
 			    error:function(data){alert ('connection error');},
 			  });
+		}
+		
+
+		//Function call when SEND button is pressed in the GUI
+		function sendMessage(){
+			//Get content from input text section
+			//var input = document.getElementById("message_content");
+			var m_content = $("#message_content").val();
+			
+			//Build message body
+			var message ="Hi! This is your fridge. Jus wanted to say: "+m_content;
+
+			$("#log").text("Send message: " + message);
+
+			var parameters = {
+				'username': 'client@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
+				'message': message,
+			};
+			RestCommClient.Device.sendMessage(parameters);
+
 		}
 
 		</script>
