@@ -1,8 +1,10 @@
 "use strict";
 console.log("Loading browser sdk");
 
-var myUserId = "@Antonio_gilipollas_caraculo:matrix.org";
-var myAccessToken = "MDAxOGxvY2F0aW9uIG1hdHJpeC5vcmcKMDAxM2lkZW50aWZpZXIga2V5CjAwMTBjaWQgZ2VuID0gMQowMDNhY2lkIHVzZXJfaWQgPSBAQW50b25pb19naWxpcG9sbGFzX2NhcmFjdWxvOm1hdHJpeC5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMWRjaWQgdGltZSA8IDE0NzY1OTY3ODIyNTkKMDAyZnNpZ25hdHVyZSCAG8z-cmQ7QaqKC1SV4KKRmrD_KQ4-1-SDNZ2UxpOf9wo";
+
+// Set up the bot's user id and access token here
+var myUserId = "";
+var myAccessToken = "";;
 var matrixClient = matrixcs.createClient({
     baseUrl: "http://matrix.org/",
     accessToken: myAccessToken,
