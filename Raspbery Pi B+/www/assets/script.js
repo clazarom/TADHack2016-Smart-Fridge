@@ -2,7 +2,10 @@
  
     $(".scroll a, .navbar-brand, .gototop").click(function(event){   
     event.preventDefault();
-    $('html,body').animate({scrollTop:$(this.hash).offset().top}, 600,'swing');
+	    var toScroll = $(this.hash);
+	    if (toScroll.length){
+    $('html,body').animate({scrollTop:toScroll.offset().top}, 600,'swing');
+    }
     $(".scroll li").removeClass('active');
     $(this).parents('li').toggleClass('active');
     });

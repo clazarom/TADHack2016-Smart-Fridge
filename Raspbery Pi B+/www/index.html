@@ -40,9 +40,6 @@
 <body>
 <div class="topbar animated fadeInLeftBig"></div>
 
-<!-- html elements for local and remote media (audio and video if applicable -->
-	<video id="localMedia" autoplay muted style="display: none;"></video>
-	<video id="remoteMedia" autoplay style="display: none;"></video>
 
 <!-- Header Starts -->
 <div class="navbar-wrapper">
@@ -52,7 +49,7 @@
           <div class="container">
             <div class="navbar-header">
               <!-- Logo Starts -->
-              <a class="navbar-brand" href="#home"><h2>Little Endian's Kitchen</h2></a>
+              <a class="navbar-brand" id = "refresh1" href="#"><h2>Little Endian's Kitchen</h2></a>
               <!-- #Logo Ends -->
 
 
@@ -68,7 +65,7 @@
               <!-- Nav Starts -->
             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right scroll">
-                 <li class="active"><a href="index.html">Home</a></li>
+                 <li class="active"><a id = "refresh2" href="#">Home</a></li>
               </ul>
             </div>
             <!-- #Nav Ends -->
@@ -115,6 +112,10 @@
 
 <!-- Fridge list section -->
 	<div id="fridge"  class="container spacer about">
+			<h2 class="text-center wowload fadeInUp"> In your fridge</h2>  
+			<video id="remoteMedia" autoplay muted style="display: none;"></video>
+			<video id="localMedia" autoplay muted ></video>
+
 			<h2 class="text-center wowload fadeInUp">What is missing in the Fridge?</h2>  
 			<div class ="row">
 				<ul id="missing">
@@ -232,6 +233,8 @@
 
 <!-- Telestax -->
 <script>
+
+		<!-- WEBRTC Connections -->
 		var localMedia = document.getElementById("localMedia");
 		var remoteMedia = document.getElementById("remoteMedia");
 		var callButton = document.getElementById("callButton");
@@ -240,8 +243,14 @@
 		var vrButton = document.getElementById("vr");
 		var sendReminderButton=  document.getElementById("reminder");
 		var sendMessageButton=  document.getElementById("message");
+		var refreshButton = document.getElementById("refresh1");
+		var refreshButton1 = document.getElementById("refresh2");
+
+		//Prefix value to detect the caller is one resident of the house
+		var prefix = 'your-prefix';
 
 		var currentConnection;
+		//var currentDevice;
 
 		callButton.onclick = call;
 		hangupButton.onclick = hangup;
@@ -249,21 +258,31 @@
 		vrButton.onclick=  goVR;
 		sendReminderButton.onclick=  sendReminder;
 		sendMessageButton.onclick = sendMessage;
+		refreshButton.onclick = refresh;
+		refreshButton1.onclick = refresh;
+
 
 		var parameters = {
 			'debug': true,
-			'username': 'user',
-			'password': 'user_password',
+			'username': 'your-user',
+			'password': 'password',
 			'registrar': 'wss://tadhack.restcomm.com:5063',
 			'domain': 'tadhack.restcomm.com'
 		};
 
 		// In order to use RestCommWebClient you first to setup the Device with parameters set above
 		RestCommClient.Device.setup(parameters);
+		
+		//Refresh to setup the client again
+		function refresh(){
+			$("#log").text("Reconnect");
+			RestCommClient.Device.setup(parameters);
+		}
 
 		// Pass a callback to get notified when RestCommWebClient is ready
 		RestCommClient.Device.ready(function(device) {
 			$("#log").text("Ready");
+			//currentDevice = device;
 		});
 
 		// Pass a callback to get notified if a Device error occurs
@@ -273,15 +292,83 @@
 
 		// Pass a callback to get notified when a connection is established successfuly
 		RestCommClient.Device.connect(function(connection) {
-			$("#log").text("Successfully established call");
+			$("#log").text("Successfully established call: "+connection.parameters.From);
+		});
+		
+		// Pass a callback to get notified when an incoming call is coming
+		RestCommClient.Device.incoming(function(connection){
+			var caller = connection.parameters.From;
+			$("#log").text("Incoming call: "+ caller);
+			//cameraON();
+
+			var parameters = {
+				'video-enabled': true,
+				'local-media': localMedia,
+				'remote-media': remoteMedia,
+			};
+			
+			// Pass a callback to get notified when the connection is disconnected
+			connection.disconnect(function(connection) {
+				$("#log").text("Incoming connection ended");
+				remoteMedia.pause();
+				localMedia = document.getElementById("remoteMedia");
+				
+				//MediaStreamTrack.stop();
+				cameraOFF();
+			});
+
+			// Pass a callback to get notified if a Connetion error occurs
+			connection.error(function(error) {
+				$("#log").text("Incoming connection error: " + error);
+			});
+			
+			//Only accept incoming calls from certain users
+			if(caller.includes(prefix)){
+				connection.accept(parameters);
+			}
+			
+		});
+		
+		//Pass a callback to get notified when an incoming message
+		RestCommClient.Device.message(function(parameters) {
+			$("#log").text("Incoming message from: " + parameters.From + ": " + parameters.Text);
 		});
 		
 
+		<!-- Camera streams -->
+		var localstream;
 
+		//Did not work on the PI...
+		/*function cameraON(){
+			if (navigator.mediaDevices.getUserMedia !== null) {
+			  var options = { 
+			    video:true, 
+			    audio:false 
+			  };  
+			  navigator.webkitGetUserMedia(options, function(stream) { 
+				//localMedia.src = window.URL.createObjectURL(stream);
+				localstream = stream;
+				//localMedia.play();
+				console.log("streaming");
+			  }, function(e) { 
+				console.log("background error : " + e.name);
+			  }); 
+			}
+		}*/
+		function cameraOFF() {
+			  //clearInterval(theDrawLoop);
+			  //ExtensionData.vidStatus = 'off';
+			  localMedia.pause();
+			  localMedia = document.getElementById("localMedia");
+			  localMedia.src = "";
+			  localstream.getTracks()[0].stop();
+			  console.log("Vid off");
+		}
+		<!-- FUNCTIONS -->
 		// When user presses Dial, this function is called that makes the actuall call
 		function call() {
 			var parameters = {
-				'username': 'client@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
+				'username': 'client-number@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
 				'video-enabled': false,  // should we use WebRTC video or WebRTC audio only?
 				'local-media': localMedia,
 				'remote-media': remoteMedia,
@@ -293,6 +380,8 @@
 			// Pass a callback to get notified when the connection is disconnected
 			currentConnection.disconnect(function(connection) {
 				$("#log").text("Connection ended");
+				l
+
 			});
 
 			// Pass a callback to get notified if a Connetion error occurs
@@ -328,14 +417,21 @@
 
 
 			var message ="For this week's assignment: \n\n kitchen -- "+ kit_content +" \n  living-room -- " +lr_content+ "\n top bathroom -- "+tb_content+"\n bottom bathroom --" +bb_content;
+			
 
-			$("#log").text("Send message: " + message);
 
-			var parameters = {
-				'username': 'client@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
-				'message': message,
+			var parameters_messages = {
+				'username': 'client-number-message@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
+				'message': 'messagr',
 			};
-			RestCommClient.Device.sendMessage(parameters);
+			
+			//First, stablish the connection
+			//var smsConnection = RestCommClient.Device.connect(parameters);
+			//$("#log").text("Device status:"+ RestCommClient.Device.status() );
+			RestCommClient.Device.sendMessage(parameters_messages);
+			$("#log").text("Send message: " + message);
+			//smsConnection.disconnect();
+
 
 		}
 		
@@ -408,7 +504,7 @@
 			$("#log").text("Send message: " + message);
 
 			var parameters = {
-				'username': 'client@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
+				'username': 'client-number-message@tadhack.restcomm.com',  // CHANGEME: update the IP address to your Restcomm instance 
 				'message': message,
 			};
 			RestCommClient.Device.sendMessage(parameters);
