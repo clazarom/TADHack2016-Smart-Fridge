@@ -10,29 +10,32 @@ The Raspbery Pi is the house fridge interface. We implemented a JS Node to work 
 
 # Requriements
 ## 1. TELESTAX 
-	To run any of the WebRTC capabilites (and well... the project itself), you need to have a Telestax account (https://tadhack.restcomm.com/#/login). In this account we have configured the:
+To run any of the WebRTC capabilites (and well... the project itself), you need to have a Telestax account (https://tadhack.restcomm.com/#/login). In this account we have configured the:
   - Users and their passwords.
   - Clients (with their number).
   - Projects to respond to the Raspberry Pi actions
   
-  We are using the host provided during the Hackathon - tadhack.restcomm.com 
+We are using the host provided during the Hackathon - tadhack.restcomm.com 
   
-  Here are we can configure different WebRTC applciations/projects, which will determine what happens when a certain user calls, a call to a client is received, or a message to a client is received.  The Raspi will setup a user and send calls/messages to a client, and the projecs in Telestax responding to this actions will be sending the actual emails/SMS/Calls to the residents.
+Here are we can configure different WebRTC applciations/projects, which will determine what happens when a certain user calls, a call to a client is received, or a message to a client is received.  The Raspi will setup a user and send calls/messages to a client, and the projecs in Telestax responding to this actions will be sending the actual emails/SMS/Calls to the residents.
   
   NOTE: With Telestax youc an also configure your own local server, though we are hosted in their cloud 
 
 ## 2. Raspberry Pi software: nodejs dependencies
-	Nodejs --> (if not installed) apt-get install nodejs
-	npm --> apt-get install npm
-	node-static module --> npm install node-static (to install as a module of the project) // npm -g install node-static (to install for the Pi)
+Nodejs --> (if not installed) apt-get install nodejs
+
+npm --> apt-get install npm
+
+node-static module --> npm install node-static (to install as a module of the project) // npm -g install node-static (to install for the Pi)
 
 ## 3. Raspberry Pi browser
-	The default Pi browser in Raspbian does not support WebRTC. To run this project in a browser in the Pi itself we can download
-	iceweasel (~firefox)
+The default Pi browser in Raspbian does not support WebRTC. To run this project in a browser in the Pi itself we can download
+iceweasel (~firefox)
 
 ## 4. Raspbery Pi - v4l2 module for the camera
-	sudo modprobe bcm2835-v4l2
-	(To test - echo "bcm2835-v4l2" | sudo tee -a /etc/modules)
+sudo modprobe bcm2835-v4l2
+
+(To test - echo "bcm2835-v4l2" | sudo tee -a /etc/modules)
 
 # How to run the project
   In /www we launch the server.js node: $nodejs server.js 
